@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: survey-api
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/survey}
+    username: ${DATABASE_USER:survey}
+    password: ${DATABASE_PASSWORD:survey}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+
+server:
+  port: ${PORT:8080}
+
+survey:
+  jwt:
+    secret: ${JWT_SECRET:change-me-in-production-use-long-random-string}
+    expiration-hours: 24
+  cors:
+    origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
