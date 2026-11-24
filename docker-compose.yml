@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: survey
+      POSTGRES_USER: survey
+      POSTGRES_PASSWORD: survey
+    ports:
+      - "5432:5432"
+    volumes:
+      - survey_pg:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/survey
+      DATABASE_USER: survey
+      DATABASE_PASSWORD: survey
+      JWT_SECRET: dev-secret-change-in-production
+      CORS_ORIGINS: http://localhost:5173
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  survey_pg:
